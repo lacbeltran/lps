@@ -36,12 +36,51 @@ Supposing you have the URL for the CSV file, you can read the data using the cod
 
 ```{r}
 library(readr)
-URL <- "http://www.opendatapoa.com.br/storage/f/2013-11-06T17%3A26%3A29.293Z/acidentes-2000.csv"
+URL <- "http://www.opendatapoa.com.br/storage/f/2013-11-06T16%3A52%3A35.356Z/acidentes-2009.csv"
 df <- read_delim(URL, delim=";")
 df
 ```
 # Results for Porto Alegre Urban Accidents in 2009
 
-## Questions
+I will describe the anlysis for the accidentes in Porto Alegre in 2009
+
+## Initial question about the data
+
+1. What is the time of the day with most accidents?
+Answer: The time of the day with most accidents is
+
+## Plots of the Data
+
+- Read the data
+
+```{r}
+library(readr)
+df <- read_delim("acidentes-2009.csv", delim=";")
+df
+```
+
+- Selec the  time colunm 
+
+```{r}
+library(dplyr)
+df %>% group_by(FX_HORA) %>% summarise(freq=sum(CONT_ACID))
+```
+
+```{r, fig.width=4.5, fig.height=3}
+library(ggplot2);
+df %>% group_by(FX_HORA) %>% summarise(freq=sum(CONT_ACID)) %>%
+   ggplot(aes(x=FX_HORA, y=freq)) + geom_bar(stat="identity") + ylim(0,NA)+ theme_bw()  + scale_x_discrete(breaks=as.factor(FX_HORA)) ;
+```
+
+Now, I need to create a histogram for the time colunm
+
+
+- Histogram of the column time
+
+```{r, fig.width=10}
+hist(df$time, breaks=24, xlab="Time", main="Frequency")
+```
+
+
 
 
