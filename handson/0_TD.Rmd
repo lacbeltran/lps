@@ -83,9 +83,12 @@ We can see that the mean estimation is `3.946`, while the median gives `3.849`. 
 ## Boxplot
 
 A much nicer way to represent the metrics of the summary above is using a boxplot. It takes all the values and create a visual representation. Can you explain what represents each element of the boxplot? How it helps you to better understand the data?
+
 ```{r, fig.width=2, fig.height=3.5}
 boxplot(df$time, ylab="Time (seconds)")
 ```
+
+- My answer: I can see a dotted vertical line from the Min to the Max values, the median as a horizontal line in the middle of the boxplot, and the horizontal edges aroun the median are the first and the third quartile. This representation is useful to understand the distribution of the time values.
 
 ## Histogram
 
@@ -94,6 +97,7 @@ A histogram counts how many times the observed value falls into different bins. 
 ```{r, fig.width=3}
 hist(df$time, breaks=7, xlab="Time (seconds)", main="Histogram of Ping-Pong")
 ```
+
 The problem of histograms is that by changing the number of bins, the perception based on the plot can radically change. Let's for instance force the number of bins to 2:
 
 ```{r, fig.width=3}
@@ -132,6 +136,47 @@ df1 <- read.csv("data/PP_size_1.csv");
 head(df1);
 ```
 
+## Statistical interpretation for Real Ping-Pong Measurements (PP_size_1.csv data)
+- Plot of all data
+
+```{r}
+plot(df1$time, ylab="Time (seconds)", xlab="Measurement Number", cex = .2);
+```
+An overview of the data shows that all the measurements are of less than one second.
+
+- Statistical Summanry
+
+```{r}
+summary(df1$time);
+```
+The mean estimation is 4.732e-05, while the median gives 3.164e-05.
+
+- Boxplot
+
+```{r, fig.width=2, fig.height=3.5}
+boxplot(df1$time, ylab="Time (seconds)")
+```
+The boxplot shows several outilers.
+
+- Histogram
+
+```{r, fig.width=3}
+hist(df1$time, breaks=5, xlab="Time (seconds)", main="Histogram of Real Ping-Pong")
+```
+The histogram confirms the idea that most of points are really close to zero.
+
+
+- Variability
+
+```{r}
+sd(df1$time)
+```
+
+```{r}
+mean(df1$time)
+sd(df1$time)
+```
+
 # Iteration Duration of a Geophysics Parallel Application
 
 Geophysics parallel applications are generally organized in timesteps. At each timestep, the mathematical model is calculated taking into account the time interval. As the simulation evolves, one can measure how much time it takes to calculate the mathematical model for each iteration. Here we provide a data set that contains the duration of each iteration in a simulation composed of a little less than 500 iterations. Here's the code to read that data set:
@@ -139,4 +184,28 @@ Geophysics parallel applications are generally organized in timesteps. At each t
 ```{r}
 df <- read.csv("data/IterDuration.csv");
 head(df);
+```
+
+- Plot of Geophysics Parallel Application
+
+```{r}
+plot(df$duration, ylab="Duration (seconds)", xlab="Iterations");
+```
+
+- Boxplot
+
+```{r, fig.width=2, fig.height=3.5}
+boxplot(df$duration, ylab="Duration (seconds)")
+```
+
+- Statistical Summanry
+
+```{r}
+summary(df$duration);
+```
+
+- Histogram
+
+```{r, fig.width=6}
+hist(df$duration, breaks=5, xlab="Iterations", main="Histogram of Geophysics Parallel Application")
 ```
