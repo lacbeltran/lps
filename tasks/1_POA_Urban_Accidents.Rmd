@@ -42,12 +42,12 @@ df
 ```
 # Results for Porto Alegre Urban Accidents in 2009
 
-I will describe the anlysis for the accidentes in Porto Alegre in 2009
+I will describe the analysis for the accidents in Porto Alegre in 2009.
+I will answer the first question.
 
 ## Initial question about the data
 
 1. What is the time of the day with most accidents?
-Answer: The time of the day with most accidents is
 
 ## Plots of the Data
 
@@ -59,28 +59,44 @@ df <- read_delim("acidentes-2009.csv", delim=";")
 df
 ```
 
-- Selec the  time colunm 
+- To answer this question the relevant variable is FX_HORA.
+The first thing i will do is plot the values of FX_HORA to find meaningful data.
+
+```{r, fig.width=6, fig.height=3.5}
+plot(df$FX_HORA, ylab="Hour", xlab="Measurement Number", cex=0.75);
+```
+
+This plot does not provide much help to answer the question, because there is a lot of values that need to be grouped.
+
+To group the date I will use _dplyr_.
 
 ```{r}
 library(dplyr)
 df %>% group_by(FX_HORA) %>% summarise(freq=sum(CONT_ACID))
 ```
 
+Now I get the two columns with the tidy data I want to plot.
+
+The result of that _summarise_ pipe will be passed to ggplot to visualize the number of accidents per hour.
+
 ```{r, fig.width=4.5, fig.height=3}
 library(ggplot2);
 df %>% group_by(FX_HORA) %>% summarise(freq=sum(CONT_ACID)) %>%
-   ggplot(aes(x=FX_HORA, y=freq)) + geom_bar(stat="identity") + ylim(0,NA)+ theme_bw()  + scale_x_discrete(breaks=as.factor(FX_HORA)) ;
+   ggplot(aes(x=FX_HORA, y=freq)) + geom_bar(stat="identity") + ylim(0,NA)+ theme_bw()  + scale_x_continuous(breaks=seq(1980, 2005, 5), expand=c(0,0) );
 ```
 
-Now, I need to create a histogram for the time colunm
+Now I see a trend in the amount of accidents by hour of the day.
+
+To compare the result and to have exact hours I will  create an histogram for the FX_HORA column.
 
 
-- Histogram of the column time
-
-```{r, fig.width=10}
-hist(df$time, breaks=24, xlab="Time", main="Frequency")
+```{r, fig.width=12}
+df$FX_HORA %>% hist(breaks=23, xlab="Hour",  main=" Accidents per Hour", labels=TRUE, right= FALSE) 
 ```
 
+Using the result of the two figures, I can answer the question.
 
 
+# Answer
 
+The time of the day with most accidents in 2009 is 19h with 1367 accidents.
