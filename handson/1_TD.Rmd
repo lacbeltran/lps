@@ -86,7 +86,7 @@ df %>% group_by(sex) %>% summarize(mean_age = mean(age));
 We can also _group_by()_ by multiple variables (to see the number of occurrences of age/sex combinations):
 
 ```{r}
-df %>% group_by(age, sex) %>% summarize(N=n());
+df %>% group_by(age, sex) %>% summarize(occurrence=n());
 ```
 
 How to use in combination with _ggplot()_:

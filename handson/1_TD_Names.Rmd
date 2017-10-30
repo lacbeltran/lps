@@ -33,3 +33,36 @@ df <- read_tsv("dpt2015.txt", locale = locale(encoding = "ISO-8859-1"));
 df;
 ```
 
+# Answer to the Questions about the data
+
+Load the necessary packages:
+
+```{r}
+library(dplyr);
+library(magrittr);
+```
+
+- First name frequency evolves along time?
+Answer: To answer this question, I will use the name AARON as example
+
+
+```{r}
+df %>% filter(preusuel == "AARON");
+```
+
+To group the annais I will use _dplyr_.
+
+```{r}
+df %>% filter(preusuel == "AARON") %>%
+group_by(annais) %>% summarise(freq=sum(nombre))
+```
+
+I will plot the previus result using ggplot2. Now I can answer the question. For the specific example of the name AARON, frequency evolves along time like the next figure:
+
+```{r, fig.width=10, fig.height=3}
+library(ggplot2);
+df %>%
+filter(preusuel == "AARON") %>%
+group_by(annais) %>% summarise(freq=sum(nombre)) %>%
+ggplot(aes(x=annais, y=freq)) + geom_point() + ylim(0,NA) + theme_bw();
+```
