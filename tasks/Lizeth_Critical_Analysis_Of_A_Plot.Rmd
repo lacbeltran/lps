@@ -1,0 +1,26 @@
+---
+title: "Critical Analysis Of A Plot"
+author: "Lizeth Andrea Castellanos Beltran"
+date: "10/30/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Choose a plot that has been published in the Internet, News site, anywhere. Then, in a Rmd file, provide a critical analysis about it. Put in your Git repository and send us the link by e-mail, OR send us the Rmd file directly by e-mail.
+
+# Plot Information
+I selected a figure with the title "What Happened To Women In Computer Science?.
+The plot shows the percentage of women by professional field between the years 1970 and 2010 at American universities.
+
+The URL from the plot that I choose is http://tt.imageshare.s3.amazonaws.com/blog/graphics/percent-of-women-majors-by-field.png
+
+![](http://tt.imageshare.s3.amazonaws.com/blog/graphics/percent-of-women-majors-by-field.png)
+
+# Critical Analysis
+Is possible to see that the quantity of women increased in all fields, except for computer science. In the year 1984 this value began to decrease and here appear the second question: What happened in the year 1984?
+The figure clearly shows a big change in the field of computer science. And I believe that this is the purpose of the plot. But the information is not enough to say something about the reasons of this fact.
+I can suppose that the data was collected year by year but the plot is a continuous line, so I'm not sure if the data were collected year by year or by semester or by month.
+The axis Y is between 0-50% but If I see the year 2010 and add all the percents, the result is more than the 100%
