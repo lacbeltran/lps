@@ -1,6 +1,6 @@
 ---
 title: "Urban Accidents in the City of Porto Alegre"
-author: "Jean-Marc Vincent, Lucas Mello Schnorr"
+author: "Lizeth Andrea Castellanos Beltran"
 date: "October 2017"
 output:
   pdf_document:
@@ -40,24 +40,31 @@ URL <- "http://www.opendatapoa.com.br/storage/f/2013-11-06T16%3A52%3A35.356Z/aci
 df <- read_delim(URL, delim=";")
 df
 ```
-# Results for Porto Alegre Urban Accidents in 2009
+# Critical analysis of the data
+
+The website provides a dataset dictionary with the list and the description of each variable.
+There are 43 variables in the dataset to describe every event (accident).
+The data is not present in a tidy form.
+There are dupplicated information. For example the variables DATA, DIA, MES, ANO, FX_HORA contain the same information about the date and the time.
+There are  missing data in some boxes.
+Is not clear which approach has been used to collet the data.
+We have seasons in Porto Alegre so the time change in the summer. I did not see information about that and I think that this is relevant, to aswer the first question, for example.
+
+# Question 1 
 
 I will describe the analysis for the accidents in Porto Alegre in 2009.
-I will answer the first question.
-
-## Initial question about the data
+I will answer the first question:
 
 1. What is the time of the day with most accidents?
 
-## Plots of the Data
 
-- Read the data
+<!-- - Read the data(If you have the file in the local directory) -->
 
-```{r}
-library(readr)
-df <- read_delim("acidentes-2009.csv", delim=";")
-df
-```
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!-- df <- read_delim("acidentes-2009.csv", delim=";") -->
+<!-- df -->
+<!-- ``` -->
 
 - To answer this question the relevant variable is FX_HORA.
 The first thing i will do is plot the values of FX_HORA to find meaningful data.
@@ -97,6 +104,6 @@ df$FX_HORA %>% hist(breaks=23, xlab="Hour",  main=" Accidents per Hour", labels=
 Using the result of the two figures, I can answer the question.
 
 
-# Answer
+# Answer for the Question 1 
 
 The time of the day with most accidents in 2009 is 19h with 1367 accidents.
