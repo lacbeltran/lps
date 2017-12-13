@@ -1,0 +1,198 @@
+---
+title: "Final Project: World Happiness Report"
+author: "Lizeth Andrea Castellanos Beltran"
+date: "12/11/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Introduction 
+
+The World Happiness Report is a landmark survey of the state of global happiness. The first report was published in 2012, the second in 2013, the third in 2015, and the fourth in the 2016 Update. The World Happiness 2017, which ranks 155 countries by their happiness levels, was released at the United Nations at an event celebrating International Day of Happiness on March 20th. The report continues to gain global recognition as governments, organizations and civil society increasingly use happiness indicators to inform their policy-making decisions. Leading experts across fields – economics, psychology, survey analysis, national statistics, health, public policy and more – describe how measurements of well-being can be used effectively to assess the progress of nations. The reports review the state of happiness in the world today and show how the new science of happiness explains personal and national variations in happiness.
+
+# Data
+
+The happiness scores and rankings use data from the Gallup World Poll. The scores are based on answers to the main life evaluation question asked in the poll. This question, known as the Cantril ladder, asks respondents to think of a ladder with the best possible life for them being a 10 and the worst possible life being a 0 and to rate their own current lives on that scale. The scores are from nationally representative samples for the years 2013-2016 and use the Gallup weights to make the estimates representative. The columns following the happiness score estimate the extent to which each of six factors:
+
+1. Economic production
+2. Social support
+3. Life expectancy
+4. Freedom
+5. Absence of corruption
+6. Generosity
+
+All factors contribute to making life evaluations higher in each country than they are in Dystopia, a hypothetical country that has values equal to the world’s lowest national averages for each of the six factors. 
+
+## Download the data
+
+The data set for the year 2015 is available in the kaggle website: https://www.kaggle.com/unsdsn/world-happiness/data
+Because of kaggle site requires to login to make the download, I am providing the dataset in the github directory.
+
+Supposing you have logged in the kaggle site, the URL for the CSV file is 
+https://www.kaggle.com/unsdsn/world-happiness/downloads/2015.csv
+
+
+## Column Metadata
+
+- Read the data(If you have the file in the local directory)
+
+```{r}
+library(readr)
+df <- read_csv("2015.csv")
+df;
+```
+
+
+
+
+# Goal and Question
+
+I will to try to answer this question:
+What countries or regions rank the highest in overall happiness and each of the six factors contributing to happiness?
+
+Lucas said: "The countries are already ranked, as you can see in the column "Happiness Rank". It would be indeed interesting to check whether a certain factor contribute more to the overall happiness than others. Please, be extremely rigorous in your report, justifying your choices following the LP methodology."
+
+
+
+Load the necessary packages:
+
+```{r}
+library(dplyr);
+library(magrittr);
+library(ggplot2);
+library(tidyr)
+```
+
+
+
+
+
+<!-- library(readr) -->
+<!-- X2015 <- read_csv("Dropbox/2017-lps/lps/tasks/2015.csv",  -->
+<!--     col_types = cols(`Dystopia Residual` = col_double(),  -->
+<!--         `Economy (GDP per Capita)` = col_double(),  -->
+<!--         Family = col_double(), Freedom = col_double(),  -->
+<!--         Generosity = col_double(), `Happiness Score` = col_double(),  -->
+<!--         `Health (Life Expectancy)` = col_double(),  -->
+<!--         `Standard Error` = col_double())) -->
+<!-- View(X2015) -->
+
+## Grafica happiness score
+
+```{r}
+library(readr)
+library(ggplot2)
+df <- read_csv("2015.csv")
+df;
+   
+ df %>% 
+  #arrange(`Happiness Rank`) %>% 
+  head(10) %>%
+  mutate(Country = factor(Country, levels = rev(Country))) %>%
+  ggplot(aes(x=Country, y=`Happiness Score`,fill = `Happiness Score`)) +
+  geom_bar(stat = "identity") + #position = position_stack(reverse = TRUE)) +
+  coord_flip() + theme_bw() +
+  scale_fill_gradient(low = "yellow ", high = "green ")+
+  theme(legend.position = "top")
+```
+
+```{r}
+library(readr)
+df <- read_csv("2015.csv")
+df;
+   
+ df %>% 
+  #arrange(`Happiness Rank`) %>% 
+  tail(10) %>%
+  mutate(Country = factor(Country, levels = rev(Country))) %>%
+  ggplot(aes(x=Country, y=`Happiness Score`,fill = `Happiness Score`)) +
+    geom_bar(stat = "identity") + #position = position_stack(reverse = TRUE)) +
+  coord_flip() + theme_bw() + 
+  ggtitle("The  10 least happy countries of 2015") +
+  scale_fill_gradient(low = "red ", high = "yellow")+
+  theme(legend.position = "top")
+```
+
+
+    
+
+
+    
+
+```{r}
+df %>% head(n=2);
+```
+```{r}
+df %>% filter(Region == "Western Europe");
+```
+```{r}
+df %>% group_by(Region) %>% summarize(occurrence=n());
+```
+```{r}
+summary(df)
+```
+
+
+```{r}
+summary(df$`Happiness Score`)
+```
+
+```{r}
+plot(df$`Happiness Score`, main = "Happiness Score by Frequency", ylab="Happiness Score", xlab="Frequency");
+```
+
+
+
+```{r}
+g <- ggplot(mpg, aes(class))
+g + geom_bar()
+```
+
+```{r}
+g +
+ geom_bar(aes(fill = drv), position = position_stack(reverse = TRUE)) +
+ coord_flip() +
+ theme(legend.position = "top")
+```
+
+```{r}
+library(tidyr)
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+df %>% 
+  #arrange(Happiness Rank) %>% 
+  sample_n(10) %>%
+  head(10) %>%
+  mutate(Country = factor(Country, levels = rev(Country))) %>%
+  select(1,6:12)%>%
+  gather(variable, value, -Country) %>%
+  ggplot(aes(Country))+
+  geom_bar(aes(y=value, fill = variable), position = position_stack(reverse = TRUE), stat="identity") +
+  coord_flip() +
+  theme(legend.position = "top")
+```
+
+
+
+<!-- # ```{r} -->
+<!-- # library(readr) -->
+<!-- # library(ggplot2) -->
+<!-- # df <- read_csv("2015.csv") -->
+<!-- # df; -->
+<!-- #     -->
+<!-- #  df %>%  -->
+<!-- #   #arrange(`Happiness Rank`) %>%  -->
+<!-- #   head(10) %>% -->
+<!-- #   mutate(Country = factor(Country, levels = rev(Country))) %>% -->
+<!-- #   ggplot(aes(x=Country, y=`Happiness Score`,fill = `Economy (GDP per Capita)`)) + -->
+<!-- #   #geom_bar(stat = "identity") + position = position_stack(reverse = TRUE) + -->
+<!-- #   geom_bar(aes(fill = df), position = position_stack(reverse = TRUE)) + -->
+<!-- #   coord_flip() + theme_bw() + -->
+<!-- #   scale_fill_gradient(low = "yellow ", high = "green ")+ -->
+<!-- #   theme(legend.position = "top") -->
+<!-- # ``` -->
+
+# Answer of the Question
