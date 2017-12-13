@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The World Happiness Report is a landmark survey of the state of global happiness. The first report was published in 2012, the second in 2013, the third in 2015, and the fourth in the 2016 Update. The World Happiness 2017, which ranks 155 countries by their happiness levels, was released at the United Nations at an event celebrating International Day of Happiness on March 20th. The report continues to gain global recognition as governments, organizations and civil society increasingly use happiness indicators to inform their policy-making decisions. Leading experts across fields – economics, psychology, survey analysis, national statistics, health, public policy and more – describe how measurements of well-being can be used effectively to assess the progress of nations. The reports review the state of happiness in the world today and show how the new science of happiness explains personal and national variations in happiness.
 
-# Data
+# Description of the Data
 
 The happiness scores and rankings use data from the Gallup World Poll. The scores are based on answers to the main life evaluation question asked in the poll. This question, known as the Cantril ladder, asks respondents to think of a ladder with the best possible life for them being a 10 and the worst possible life being a 0 and to rate their own current lives on that scale. The scores are from nationally representative samples for the years 2013-2016 and use the Gallup weights to make the estimates representative. The columns following the happiness score estimate the extent to which each of six factors:
 
@@ -25,27 +25,40 @@ The happiness scores and rankings use data from the Gallup World Poll. The score
 
 All factors contribute to making life evaluations higher in each country than they are in Dystopia, a hypothetical country that has values equal to the world’s lowest national averages for each of the six factors. 
 
+
 ## Download the data
 
-The data set for the year 2015 is available in the kaggle website: https://www.kaggle.com/unsdsn/world-happiness/data
-Because of kaggle site requires to login to make the download, I am providing the dataset in the github directory.
+I am providing the dataset for the year 2015 in the github directory https://github.com/lacbeltran/lps/blob/master/tasks/2005.csv
 
-Supposing you have logged in the kaggle site, the URL for the CSV file is 
+If you want to download the data from the kaggle site, you have to be logged.  The URL for the CSV file is 
 https://www.kaggle.com/unsdsn/world-happiness/downloads/2015.csv
 
 
-## Column Metadata
+## Read the Data
 
 - Read the data(If you have the file in the local directory)
 
 ```{r}
 library(readr)
 df <- read_csv("2015.csv")
-df;
 ```
 
+The dataset contains 12 columns. The next are the descriptions of every colunm according to the column metadata information. The column 6 to the colum 11 describe the extent to which these factors contribute in evaluating the happiness in each country. The Dystopia Residual metric actually is the Dystopia Happiness Score(1.85) + the Residual value or the unexplained value for each country as stated in the previous answer.
 
+If you add all these factors up, you get the happiness score so it might be un-reliable to model them to predict Happiness Scores.
 
+1. Country: Name of the country.
+2. Region: Region the country belongs to.
+3. Happiness Rank: Rank of the country based on the Happiness Score.
+4. Happiness Score: A metric measured in 2015 by asking the sampled people the question: "How would you rate your happiness on a scale of 0 to 10 where 10 is the happiest".
+5. Standard Error.
+6. Economy (GDP per Capita): The extent to which GDP contributes to the calculation of the Happiness Score.
+7. Family: The extent to which Family contributes to the calculation of the Happiness Score.
+8. Health (Life Expectancy): The extent to which Life expectancy contributed to the calculation of the Happiness Score.
+9. Freedom: The extent to which Freedom contributed to the calculation of the Happiness Score.
+10. Trust (Government Corruption): The extent to which Perception of Corruption contributes to Happiness Score.
+11. Generosity: The extent to which Generosity contributed to the calculation of the Happiness Score.
+12. Dystopia Residual: The extent to which Dystopia Residual contributed to the calculation of the Happiness Score.
 
 # Goal and Question
 
