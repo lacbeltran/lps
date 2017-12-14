@@ -1,7 +1,7 @@
 ---
 title: "Final Project: World Happiness Report"
 author: "Lizeth Andrea Castellanos Beltran"
-date: "12/11/2017"
+date: "December 2017"
 output: pdf_document
 ---
 
@@ -14,14 +14,14 @@ The World Happiness Report is a landmark survey of the state of global happiness
 
 # Description of the Data
 
-The happiness scores and rankings use data from the Gallup World Poll. The scores are based on answers to the main life evaluation question asked in the poll. This question, known as the Cantril ladder, asks respondents to think of a ladder with the best possible life for them being a 10 and the worst possible life being a 0 and to rate their own current lives on that scale. The scores are from nationally representative samples for the years 2013-2016 and use the Gallup weights to make the estimates representative. The columns following the happiness score estimate the extent to which each of six factors:
+The happiness scores and rankings use data from the Gallup World Poll. The scores are based on answers to the main life evaluation question asked in the poll. This question, known as the Cantril ladder, asks respondents to think of a ladder with the best possible life for them being a 10 and the worst possible life being a 0 and to rate their own current lives on that scale. The columns following the happiness score estimate the extent to which each of six factors:
 
-1. Economic production
-2. Social support
-3. Life expectancy
-4. Freedom
-5. Absence of corruption
-6. Generosity
+1. Economic production.
+2. Social support.
+3. Life expectancy.
+4. Freedom.
+5. Absence of corruption.
+6. Generosity.
 
 All factors contribute to making life evaluations higher in each country than they are in Dystopia, a hypothetical country that has values equal to the world’s lowest national averages for each of the six factors. 
 
@@ -45,7 +45,7 @@ df;
 ```
 ## Metadata description
 
-The dataset contains 12 columns and 158 countries. The next are the descriptions of every colunm according to the column metadata information. 
+The dataset contains 12 columns and 158 countries. The next are the descriptions of every colunm according to the column metadata information: 
 
 1. Country: Name of the country.
 2. Region: Region the country belongs to.
@@ -60,7 +60,7 @@ The dataset contains 12 columns and 158 countries. The next are the descriptions
 11. Generosity: The extent to which Generosity contributed to the calculation of the Happiness Score.
 12. Dystopia Residual: The extent to which Dystopia Residual contributed to the calculation of the Happiness Score.
 
-The column 6 to the colum 11 describe the extent to which these factors contribute in evaluating the happiness in each country. The Dystopia Residual metric actually is the Dystopia Happiness Score(1.85) + the Residual value or the unexplained value for each country as stated in the previous answer. Dystopia is an imaginary country that has the world’s least-happy people. The purpose in establishing Dystopia is to have a benchmark against which all countries can be favorably compared
+The column 6 to the colum 11 describe the extent to which these factors contribute in evaluating the happiness in each country. The Dystopia Residual metric actually is the Dystopia Happiness Score(1.85) + the Residual value or the unexplained value for each country as stated in the previous answer. Dystopia is an imaginary country that has the world’s least-happy people. The purpose in establishing Dystopia is to have a benchmark against which all countries can be favorably compared.
 If you add all these factors up, you get the happiness score so it might be un-reliable to model them to predict Happiness Scores.
 
 ## Critical analysis of the data
@@ -68,13 +68,14 @@ If you add all these factors up, you get the happiness score so it might be un-r
 Is possible to see that the countries are already ranked, as you can see in the column "Happiness Rank". However, It would be interesting to check whether a certain factor contribute more to the overall happiness than others.
 There are 12 variables in the dataset to describe every observation (country happiness rank).
 The website provides a dataset dictionary with the list and the description of each variable. The variable "Standard Error" have not a description and for me was not clear the way that this variable was calculated.
-The data is present in a tidy form and there are not missing data in the cells
+The data is present in a tidy form and there are not missing data in the cells.
 
 
 # Goal and Question
 
 I will to try to answer the next specific question:
-What countries or regions rank the highest in overall happiness and each of the six factors contributing to happiness?
+
+- What countries or regions rank the highest in overall happiness and each of the six factors contributing to happiness?
 
 
 # Analysis and Answer of the Question
@@ -84,39 +85,37 @@ The first thing I will do is plot the values of Happiness Score for all the 158 
 ```{r}
 plot(df$`Happiness Score`, main = "Happiness Score by Country", ylab="Happiness Score", xlab="Measurement Country");
 ```
-
-We can see that the mean estimation is `5.376 `, while the median gives `5.232`. There is a big difference between the happiest and the least happy country in the world: `7.587`  and `2.839` respectively.
+Is possible to see that the mean estimation is `5.376 `, while the median gives `5.232`. There is a big difference between the happiest and the least happy country in the world: `7.587`  and `2.839` respectively.
 
 ```{r}
 summary(df$`Happiness Score`)
 ```
-
-The standard deviation shows tha the variability of the Happiness Score is `1.14501` 
+The standard deviation shows tha the variability of the Happiness Score is `1.14501`.
 
 ```{r}
 sd(df$`Happiness Score`)
 ```
-
 The boxplot representation is useful to understand the distribution of the Happiness Score values.
 
 ```{r,fig.width=2, fig.height=3.5}
 boxplot(df$`Happiness Score`, ylab="Happiness Score")
 ```
 
-
-- The amount of countries is 158 so I will concentrate the analysis on the first ten and the last ten countries of the ranking. In others words I will select the top10 happiest and the top10 least happy countries in the world. 
+The amount of countries is 158 so I will concentrate the analysis on the first ten and the last ten countries of the ranking. In others words I will select the top10 happiest and the top10 least happy countries in the world. 
 The idea is plot their Happiness Score in a first overview. In a second way I will plot every factor to check whether a certain factor contribute more to the overall happiness than others.
 
 - Load the necessary packages:
 
 ```{r}
-library(dplyr);
-library(magrittr);
-library(ggplot2);
+library(dplyr)
+library(magrittr)
+library(ggplot2)
 library(tidyr)
 ```
 
-- The top10 happiest countries in the world are:
+##  The top10 happiest countries in the world 
+
+I will show the 10 first countries of the ranking:
 
 ```{r}
 df %>% 
@@ -132,6 +131,7 @@ df %>%
   group_by(Region) %>% summarize(occurrence=n());
 ```
 
+Now I will plot the Top10 Happiest Countries in a geom_bar to show the country and the score:
 
 ```{r}
 library(readr)
@@ -153,7 +153,9 @@ df;
 
 Switzerland is on the top of the ranking, followed vy more european countries. Only one country of America is on the top 10, this was Canada. Australia and New Zeland are in the top 10 too.
 
-- The top10 least happy countries in the world are:
+## The top10 least happy countries in the world 
+
+I will show the 10 last countries of the ranking:
 
 ```{r}
 df %>% 
@@ -168,13 +170,12 @@ df %>%
   tail(n=10) %>% 
   group_by(Region) %>% summarize(occurrence=n());
 ```
-
-
+Now I will plot the Top10 Least Happy Countries in a geom_bar to show the country and the score:
 
 ```{r}
 library(readr)
 df <- read_csv("2015.csv")
-df;
+#df;
    
  df %>% 
   #arrange(`Happiness Rank`) %>% 
@@ -188,13 +189,12 @@ df;
   theme(legend.position = "top")
 ```
 
+Togo is on the last position of the ranking. Only one country of Asia is on the ranking of the least happy countries. Neither Europe nor America are in the lasts positions. 
 
-Togo is on last position of the ranking. Only one country of Asia is on the top of the least happy countries. Neither Europe nor America are in the lasts positions. 
-
+## How the factors contribute th the ranking
 
 - Now, It would be interesting to check whether a certain factor contribute more to the overall happiness than others. So I need to plot all the factors in a way that I can compare the difference between countries.
 
-For the Top10 Happiest Countries we can see that all the factors are very similar as shown below:
 
 ```{r}
 library(tidyr)
@@ -214,9 +214,9 @@ df %>%
   ggtitle("The  Top10 Happiest Countries of 2015") +
   theme(legend.position = "top")
 ```
+For the Top10 Happiest Countries we can see that all the factors are very similar.
 
-For the Top10 Least Happy Countries  we can see some differences between the factors. In this case, Dystopia Residual and Family are the factors that more contribute to the happiness. Trust in the goverment, life expectancy and generosity are the  factors that contribute least to the happiness.
- 
+
 ```{r}
 library(tidyr)
 library(magrittr)
@@ -235,6 +235,7 @@ df %>%
   ggtitle("The  Top10 Least Happy Countries of 2015") +
   theme(legend.position = "top")
 ```
+However, for the Top10 Least Happy Countries  we can see some differences between the factors. In this case, Dystopia Residual and Family are the factors that more contribute to the happiness. Trust in the goverment, life expectancy and generosity are the  factors that contribute least to the happiness.
 
 
 Now, I will sample 20 countries of the ranking to see differences between the others contries. Curiously, trust in the goverment and generosity are the factor that contribute least to the happiness. Dystopia Residual, economy and family are the factors than  more contribute to the happiness. 
